@@ -3,6 +3,25 @@ title: G + V
 ---
 
 <div class="row">
+	<div class="small-12 columns">
+		<ul class="polaroids">
+			<li>
+				<%= image_tag lorem.image('250x250') %>
+				<span>Kyoto, Japan</span>
+			</li>
+			<li>
+				<%= image_tag lorem.image('250x250') %>
+				<span>Yosemite National Park, USA</span>
+			</li>
+			<li>
+				<%= image_tag lorem.image('250x250') %>
+				<span>Amsterdam, Netherlands</span>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
     <div class="small-12 columns text-center">
 		<% link_to "/rsvp.html", :class => "rsvp" do %>
 			<span class="fa-stack">
@@ -13,26 +32,43 @@ title: G + V
 	</div>
 </div>
 
-<div class="row">
-	<div class="small-12 columns">
-		<h3>Where?</h3>
-		<p><a href="http://hawthornestates.ca">Hawthorn Estates</a></p>
-		<ul>
-			<li>From Winnipeg, take Highway 59 North.</li>
-			<li>Exit right on Highway 44 East.</li>
-			<li>Drive 11 km on Highway 44.</li>
-			<li>At the second exit to Garson, turn north on Road 33E.</li>
-			<li>Drive approximately 5 km on Road 33E.</li>
-			<li>Hawthorn Estates is the second driveway on your left after crossing the 3rd mile road.</li>
-		</ul>
+<section>
+	<div class="row">
+		<div class="small-6 small-centered columns">
+				<h3>Where?</h3>
+				<ul>
+					<li>From Winnipeg, take Highway 59 North.</li>
+					<li>Exit right on Highway 44 East.</li>
+					<li>Drive 11 km on Highway 44.</li>
+					<li>At the second exit to Garson, turn north on Road 33E.</li>
+					<li>Drive approximately 5 km on Road 33E.</li>
+					<li><a href="http://hawthornestates.ca">Hawthorn Estates</a> is the second driveway on your left after crossing the 3rd mile road.</li>
+				</ul>
+		</div>
 	</div>
-</div>
+</section>
 
-<!--<script>
+<div id="hawthorn" class="map"></div>
+
+<section>
+	<div class="row">
+		<div class="small-6 small-centered columns">
+			<h3>Staying overnight?</h3>
+			<p>If you're looking for a place to stay nearby, the new Canalta Selkirk is a 15 minute taxi ride from Hawthorn Estates.</p>
+			<p>
+				<a href="http://www.canaltahotels.com/our-properties/selkirk-canalta">Canalta Hotels</a><br />
+				1061 Manitoba Avenue<br />
+				Selkirk, MB R1A 3T7
+			</p>
+		</div>
+	</div>
+</section>
+
+<script>
 	$(document).ready(function () {
 		var hawthornOptions = {
-			center: new google.maps.LatLng(50.129892, -96.705465),
-			zoom: 14,
+			center: new google.maps.LatLng(50.019892, -96.705465),
+			zoom: 9,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			streetViewControl: false
 		};
@@ -45,7 +81,7 @@ title: G + V
 		});
 
 		var hawthornInfo = new google.maps.InfoWindow({
-			content: '<strong>Hawthorn Estates</strong>'
+			content: '<strong>Hawthorn Estates</strong><br />St. Clements, MB'
 		});
 
 		google.maps.event.addListener(hawthornMarker, 'click', function () {
@@ -53,17 +89,3 @@ title: G + V
 		});
 	});
 </script>
-
-<div id="hawthorn" class="map"></div>-->
-
-<div class="row">
-	<div class="small-12 columns">
-		<h3>Staying overnight?</h3>
-		<p>If you're looking for a place to stay nearby, the new Canalta Selkirk is a 15 minute taxi ride from Hawthorn Estates.</p>
-		<p>
-			<a href="http://www.canaltahotels.com/our-properties/selkirk-canalta">Canalta Hotels</a><br />
-			1061 Manitoba Avenue<br />
-			Selkirk, MB R1A 3T7
-		</p>
-	</div>
-</div>
