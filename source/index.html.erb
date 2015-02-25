@@ -1,0 +1,69 @@
+---
+title: G + V
+---
+
+<div class="row">
+    <div class="small-12 columns text-center">
+		<% link_to "/rsvp.html", :class => "rsvp" do %>
+			<span class="fa-stack">
+				<i class="fa fa-comment fa-stack-2x"></i>
+				<span class="fa-stack-2x rsvp-text">RSVP<em>!</em></span>
+			</span>
+		<% end %>
+	</div>
+</div>
+
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Where?</h3>
+		<p><a href="http://hawthornestates.ca">Hawthorn Estates</a></p>
+		<ul>
+			<li>From Winnipeg, take Highway 59 North.</li>
+			<li>Exit right on Highway 44 East.</li>
+			<li>Drive 11 km on Highway 44.</li>
+			<li>At the second exit to Garson, turn north on Road 33E.</li>
+			<li>Drive approximately 5 km on Road 33E.</li>
+			<li>Hawthorn Estates is the second driveway on your left after crossing the 3rd mile road.</li>
+		</ul>
+	</div>
+</div>
+
+<!--<script>
+	$(document).ready(function () {
+		var hawthornOptions = {
+			center: new google.maps.LatLng(50.129892, -96.705465),
+			zoom: 14,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			streetViewControl: false
+		};
+
+		var hawthornMap = new google.maps.Map(document.getElementById('hawthorn'), hawthornOptions);
+
+		var hawthornMarker = new google.maps.Marker({
+			position: new google.maps.LatLng(50.129892, -96.705465),
+			map: hawthornMap
+		});
+
+		var hawthornInfo = new google.maps.InfoWindow({
+			content: '<strong>Hawthorn Estates</strong>'
+		});
+
+		google.maps.event.addListener(hawthornMarker, 'click', function () {
+			hawthornInfo.open(hawthornMap, hawthornMarker);
+		});
+	});
+</script>
+
+<div id="hawthorn" class="map"></div>-->
+
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Staying overnight?</h3>
+		<p>If you're looking for a place to stay nearby, the new Canalta Selkirk is a 15 minute taxi ride from Hawthorn Estates.</p>
+		<p>
+			<a href="http://www.canaltahotels.com/our-properties/selkirk-canalta">Canalta Hotels</a><br />
+			1061 Manitoba Avenue<br />
+			Selkirk, MB R1A 3T7
+		</p>
+	</div>
+</div>
