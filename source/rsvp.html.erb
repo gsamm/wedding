@@ -2,41 +2,46 @@
 title: 'RSVP | G + V'
 ---
 
-<section>
+<section ng-controller="RsvpController">
 	<div class="row">
 		<div class="small-6 small-centered columns">
 			<h3>Rsvp!</h3>
 			<p>Having issues, or just like doing things the old-fashioned way? <a href="tel:(204) 998-0863">Call us!</a></p>
 
 			<form>
-				<input type="text" placeholder="First Name" />
-				<input type="text" placeholder="Last Name" />
-				
-				<label><input type="radio" name="isAttending" value="true" /> Accepts</label>
-				<label><input type="radio" name="isAttending" value="false" /> Regrets</label>
+				<fieldset class="guest" ng-repeat="guest in model.guests track by $index">
+					<h4>Guest {{ $index + 1 }}</h4>
+					<a class="remove" title="Remove Guest" ng-click="removeGuest($index)" ng-show="guests.length > 1"><i class="fa fa-remove"></i></a>
 
-				<p>Dietary restrictions?</p>
-				<textarea></textarea>
+					<input type="text" placeholder="First Name" ng-model="guest.firstName" />
+					<input type="text" placeholder="Last Name" ng-model="guest.lastName" />
+					
+					<label><input type="radio" name="isAttending-{{ $index }}" value="true" ng-model="guest.isAttending" /> Accepts</label>
+					<label><input type="radio" name="isAttending-{{ $index }}" value="false" ng-model="guest.isAttending" /> Regrets</label>
+
+					<p>Dietary considerations?</p>
+					<textarea ng-model="guest.dietaryConsiderations"></textarea>
+				</fieldset>
 
 				<p>
-					<a href="#">+ Add Guest</a>
+					<a ng-click="addGuest()">+ Add Guest</a>
 				</p>
 
 				<h3>Optional questions!</h3>
 
 				<p>We want you to stay and party with us all night! Would you be interested in bus service to and from the venue from a central Winnipeg location?</p>
-				<label><input type="radio" name="isInterestedInTransit" value="true" /> Hell yeah!</label>
-				<label><input type="radio" name="isInterestedInTransit" value="false" /> Nah</label>
+				<label><input type="radio" name="isInterestedInTransit" value="true" ng-model="model.isInterestedInTransit" /> Hell yeah!</label>
+				<label><input type="radio" name="isInterestedInTransit" value="false" ng-model="model.isInterestedInTransit" /> Nah</label>
 
 				<p>Finally, we'd love to add you to our address book:</p>
 
-				<input type="text" placeholder="Address 1" />
-				<input type="text" placeholder="Address 2" />
-				<input type="text" placeholder="City" />
-				<input type="text" placeholder="Province" />
-				<input type="text" placeholder="Postal Code" />
+				<input type="text" placeholder="Address 1" ng-model="model.address1" />
+				<input type="text" placeholder="Address 2" ng-model="model.address2" />
+				<input type="text" placeholder="City" ng-model="model.city" />
+				<input type="text" placeholder="Province" ng-model="model.province" />
+				<input type="text" placeholder="Postal Code" ng-model="model.postalCode" />
 
-				<button type="submit">Ka-pow!</button>
+				<button ng-click="save()">Ka-pow!</button>
 			</form>
 		</div>
 	</div>

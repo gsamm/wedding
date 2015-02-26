@@ -1,3 +1,5 @@
-//= require "libs/jquery"
-//= require "libs/angular"
+//= require_directory "./libs"
+//= require_self
+//= require_directory "./controllers"
 
+angular.module('wedding', ['firebase']);
