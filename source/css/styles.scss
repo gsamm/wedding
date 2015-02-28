@@ -36,17 +36,20 @@ h3
 
 header
 {
+	background-color: rgba(255, 255, 255, 0.9);
 	padding: 20px 0;
+	margin-bottom: 40px;
 }
 
 .polaroids
 {
-	list-style-type: none;
+	list-style: none;
+	text-align: center;
 
 	li
 	{
 		background-color: #fff;
-		float: right;
+		display: inline-block;
 		height: 295px;
 		padding: 5px 5px 40px 5px;
 
@@ -89,7 +92,7 @@ header
 
 		span
 		{
-			font-family: 'Pacifico', cursive;
+			font-family: 'Permanent Marker', cursive;
 		}
 
 		img
@@ -108,7 +111,7 @@ header
 {
 	display: inline-block;
 	font-size: 60px;
-	margin: 0 0 20px 0;
+	margin: 0 0 40px 0;
 
 	.rsvp-text
 	{
