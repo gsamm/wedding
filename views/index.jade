@@ -1,0 +1,71 @@
+extends layout
+
+block content
+	.row
+		.small-12.columns
+			ul.polaroids
+				li
+					image(src='images/photograph-1.jpg')
+					span Kyoto, Japan
+				li
+					image(src='images/photograph-2.jpg')
+					span Sequoia National Park, USA
+				li
+					image(src='images/photograph-3.jpg')
+					span Mürren, Switzerland
+
+	.row
+		.small-12.columns.text-center
+			a.rsvp(href='/find-invitation')
+				span.fa-stack
+					i.fa.fa-comment.fa-stack-2x
+					span.fa-stack-2x.rsvp-text RSVP<em>!</em>
+
+	section
+		.row
+			.small-6.small-centered.columns
+				h3 Where?
+				p The ceremony and reception will be taking place at <a href="http://hawthornestates.ca">Hawthorn&nbsp;Estates</a>.
+				ul
+					li From Winnipeg, take Highway 59 North.
+					li Exit right on Highway 44 East.
+					li Drive 11 km on Highway 44.
+					li At the second exit to Garson, turn north on Road 33E.
+					li Drive approximately 5 km on Road 33E.
+					li Hawthorn Estates is the second driveway on your left after crossing the 3rd mile road.
+	#hawthorn.map
+
+	section
+		.row
+			.small-6.small-centered.columns
+				h3 Staying overnight?
+				p If you're looking for a place to stay nearby, the new Canalta Selkirk is a 15 minute taxi ride from Hawthorn Estates.
+				p.
+					<a href="http://www.canaltahotels.com/our-properties/selkirk-canalta">Canalta Hotels</a><br />
+					1061 Manitoba Avenue<br />
+					Selkirk, MB R1A 3T7
+
+	script.
+		$(document).ready(function () {
+			var hawthornOptions = {
+				center: new google.maps.LatLng(50.019892, -96.705465),
+				zoom: 9,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				streetViewControl: false
+			};
+
+			var hawthornMap = new google.maps.Map(document.getElementById('hawthorn'), hawthornOptions);
+
+			var hawthornMarker = new google.maps.Marker({
+				position: new google.maps.LatLng(50.129892, -96.705465),
+				map: hawthornMap
+			});
+
+			var hawthornInfo = new google.maps.InfoWindow({
+				content: '<strong>Hawthorn Estates</strong><br />St. Clements, MB'
+			});
+
+			google.maps.event.addListener(hawthornMarker, 'click', function () {
+				hawthornInfo.open(hawthornMap, hawthornMarker);
+			});
+		});
