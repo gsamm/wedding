@@ -4,6 +4,7 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var pg = require('pg');
 var sass = require('node-sass-middleware');
+var _ = require('underscore');
 
 var app = express();
 
@@ -34,36 +35,75 @@ app.get('/rsvp', function (req, res) {
 	res.render('rsvp');
 });
 
-app.get('/api/invitations:id', function (req, res) {
+app.get('/api/invitations/:id', function (req, res) {
+	var guid = req.params.id;
+
+	if (!_.isUndefined(guid) && !_.isEmpty(guid)) {
+		pg.connect(process.env.DATABASE_URL, function (err, client, done) {
+			done();
+
+			// Error connecting to server.
+			if (err) {
+				console.error(err);
+				res.send(500);
+			}
+
+			client.query('SELECT * FROM invitations WHERE guid = $1', [guid], function (err, result) {
+				// Error executing query.
+				if (err) {
+					console.error(err);
+					res.send(500);
+				} else {
+					if (result.rows.length === 0) {
+						res.send(404);
+					} else {
+						res.send(result.rows[0]);
+					}
+				}
+			});
+		});
+	} else {
+		res.send(404);
+	}
+});
+
+app.post('/api/invitations/:id', function (req, res) {
 });
 
 app.get('/api/invitations', function (req, res) {
-	pg.connect(process.env.DATABASE_URL, function (err, client, done) {
-		done();
+	var email = req.query.email;
 
-		if (err) {
-			console.error(err);
-			res.send('Error ' + err);
-		}
+	if (!_.isUndefined(email) && !_.isEmpty(email)) {
+		pg.connect(process.env.DATABASE_URL, function (err, client, done) {
+			done();
 
-		client.query('SELECT * FROM invitations WHERE email = $1', [req.query.email], function (err, result) {
 			if (err) {
 				console.error(err);
-				res.send('Error ' + err);
-			} else {
-				res.send(result.rows);
+				res.send(500);
 			}
+
+			client.query('SELECT guid FROM invitations WHERE email = $1', [email], function (err, result) {
+				if (err) {
+					console.error(err);
+					res.send(500);
+				} else {
+					if (result.rows.length === 0) {
+						res.send(404);
+					} else {
+						res.send(result.rows[0].guid);
+					}
+				}
+			});
 		});
-	});
+	} else {
+		res.send(404);
+	}
 });
 
-app.post('/api/invitations', function (req, res) {
+// 500
+app.use(function (err, req, res, next) {
+	res.status(500).render('5xx');
 });
-
-// // 500
-// app.use(function (err, req, res, next) {
-// 	res.status(500).render('5xx');
-// });
 
 // 404
 app.use(function (req, res, next) {

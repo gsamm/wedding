@@ -1,10 +1,15 @@
 extends layout
 
 block content
-	.section(ng-controller='FindInvitationController')
+	section(ng-controller='FindInvitationController')
 		.row
 			.small-6.small-centered.columns
 				h3 Find Invitation
 				p Please enter the e-mail address your invitation was sent to:
-				input(type='text', id='email', placeholder='name@example.com')
-				button(ng-click='find()') Find
+
+				form
+					input(type='text', id='email', placeholder='name@example.com', ng-model='email')
+					button(ng-click='find(email)') Find
+
+				.alert-box.alert(ng-hide='isInvitationFound', ng-cloak)
+					|Could not find an invitation for that e-mail address.
