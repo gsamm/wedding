@@ -1,6 +1,7 @@
 doctype html
 html(ng-app='wedding')
 head
+    base(href='/')
     title G + V
     meta(charset='utf-8')
     meta(content='IE=edge,chrome=1', http-equiv='X-UA-Compatible')
@@ -16,6 +17,7 @@ head
     script(src='https://maps.googleapis.com/maps/api/js')
 
     script(src='/js/libs/jquery.js')
+    script(src='/js/libs/underscore.js')
     script(src='/js/libs/angular.js')
     script(src='/js/wedding.js')
     script(src='/js/controllers/FindInvitationController.js')
