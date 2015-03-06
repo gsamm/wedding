@@ -5,7 +5,7 @@ router.get('/', function (req, res) {
 	res.render('index');
 });
 
-router.get('/rsvp', function (req, res) {
+router.get('/rsvp/:id', function (req, res) {
 	res.render('rsvp');
 });
 
