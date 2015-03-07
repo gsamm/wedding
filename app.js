@@ -6,6 +6,13 @@ var sass = require('node-sass-middleware');
 
 var app = express();
 
+if (app.get('env') == 'development') {
+	app.use(errorHandler());
+
+	// Load environment variables from .env file if running locally.
+	require('dotenv').load();
+}
+
 app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -33,13 +40,6 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
 	res.status(404).render('404', { url: req.originalUrl });
 });
-
-if (app.get('env') == 'development') {
-	app.use(errorHandler());
-
-	// Load environment variables from .env file if running locally.
-	require('dotenv').load();
-}
 
 // Setup server.
 app.listen(app.get('port'), function () {
