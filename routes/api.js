@@ -1,32 +1,56 @@
 var express = require('express');
-var pg = require('pg');
+var Promise = require('bluebird');
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize(process.env.DATABASE_URL, { dialectOptions: { ssl: 'ssl' }, logging: false });
 var _ = require('underscore');
+
+// Define models.
+var Invitation = sequelize.define('invitation', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	guid: { type: Sequelize.TEXT },
+	email: { type: Sequelize.TEXT },
+	address1: { type: Sequelize.TEXT },
+	address2: { type: Sequelize.TEXT },
+	city: { type: Sequelize.TEXT },
+	province: { type: Sequelize.TEXT },
+	postalCode: { type: Sequelize.TEXT, field: 'postal_code' },
+	arePartyAnimals: { type: Sequelize.BOOLEAN, field: 'are_party_animals' }
+}, {
+	tableName: 'invitations',
+	underscored: true
+});
+
+var Guest = sequelize.define('guest', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	firstName: { type: Sequelize.TEXT, field: 'first_name' },
+	lastName: { type: Sequelize.TEXT, field: 'last_name' },
+	isAttending: { type: Sequelize.BOOLEAN, field: 'is_attending' },
+	dietaryConsiderations: { type: Sequelize.TEXT }
+}, {
+	tableName: 'guests',
+	underscored: true
+});
+
+// Define relationships.
+Invitation.hasMany(Guest);
+
 var router = express.Router();
 
 router.get('/invitations', function (req, res) {
 	var email = req.query.email;
 
 	if (!_.isUndefined(email) && !_.isEmpty(email)) {
-		pg.connect(process.env.DATABASE_URL, function (err, client, done) {
-			done();
-
-			if (err) {
-				console.error(err);
-				res.send(500);
+		Invitation.find({
+			where: { email: email }
+		}).then(function (invitation) {
+			if (_.isNull(invitation)) {
+				res.send(404);
+			} else {
+				res.send(invitation.guid);
 			}
-
-			client.query('SELECT guid FROM invitations WHERE email = $1', [email], function (err, result) {
-				if (err) {
-					console.error(err);
-					res.send(500);
-				} else {
-					if (result.rows.length === 0) {
-						res.send(404);
-					} else {
-						res.send(result.rows[0].guid);
-					}
-				}
-			});
+		}).catch(function (err) {
+			console.error(err);
+			res.send(500);
 		});
 	} else {
 		res.send(404);
@@ -37,41 +61,31 @@ router.get('/invitations/:id', function (req, res) {
 	var guid = req.params.id;
 
 	if (!_.isUndefined(guid) && !_.isEmpty(guid)) {
-		pg.connect(process.env.DATABASE_URL, function (err, client, done) {
-			done();
+		Invitation.find({
+			include: [ Guest ],
+			where: { guid: guid }
+		}).then(function (invitation) {
+			if (_.isNull(invitation)) {
+				res.send(404);
+			} else {
+				var result = {
+					id: invitation.id,
+					guests: []
+				};
 
-			// Error connecting to server.
-			if (err) {
-				console.error(err);
-				res.send(500);
+				_.each(invitation.guests, function (element, index, list) {
+					result.guests.push({
+						id: element.id,
+						firstName: element.firstName,
+						lastName: element.lastName
+					});
+				});
+
+				res.send(result);
 			}
-
-			client.query('SELECT * FROM invitations i INNER JOIN guests g ON g.invitation_id = i.id WHERE guid = $1', [guid], function (err, result) {
-				// Error executing query.
-				if (err) {
-					console.error(err);
-					res.send(500);
-				} else {
-					if (result.rows.length === 0) {
-						res.send(404);
-					} else {
-						var invitation = {
-							id: result.rows[0].id,
-							guests: []
-						};
-
-						_.each(result.rows, function (element, index, list) {
-							invitation.guests.push({
-								id: element.id,
-								firstName: element.first_name,
-								lastName: element.last_name
-							});
-						});
-
-						res.send(invitation);
-					}
-				}
-			});
+		}).catch(function (err) {
+			console.error(err);
+			res.send(500);
 		});
 	} else {
 		res.send(404);
@@ -79,7 +93,50 @@ router.get('/invitations/:id', function (req, res) {
 });
 
 router.put('/invitations/:id', function (req, res) {
-	// TODO: Update invitation and guest information.
+	var guid = req.params.id;
+
+	if (!_.isUndefined(guid) && !_.isEmpty(guid)) {
+		Invitation.find({
+			include: [ Guest ],
+			where: { guid: guid }
+		}).then(function (invitation) {
+			if (_.isNull(invitation)) {
+				res.send(404);
+			} else {
+				invitation.address1 = req.body.address1;
+				invitation.address2 = req.body.address2;
+				invitation.city = req.body.city;
+				invitation.province = req.body.province;
+				invitation.postalCode = req.body.postalCode;
+				invitation.arePartyAnimals = req.body.arePartyAnimals;
+
+				_.each(req.body.guests, function (element, index, list) {
+					invitation.guests[index].isAttending = element.isAttending;
+					invitation.guests[index].dietaryConsiderations = element.dietaryConsiderations;
+				});
+
+				sequelize.transaction(function (t) {
+					return invitation.save({ transaction: t })
+					.then(function () {
+						return Promise.all(_.each(invitation.guests, function (element, index, list) {
+							return element.save({ transaction: t});
+						}));
+					})
+				}).then(function () {
+					// Transaction has been committed.
+					res.send(200);
+				}).catch(function (err) {
+					console.error(err);
+					res.send(500);
+				});
+			}
+		}).catch(function (err) {
+			console.error(err);
+			res.send(500);
+		});
+	} else {
+		res.send(404);
+	}
 });
 
 module.exports = router;

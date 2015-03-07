@@ -2,11 +2,10 @@ extends layout
 
 block content
 	section(ng-controller='RsvpController')
-		pre {{ invitationId}}
 		.row
 			.small-6.small-centered.columns
 				h3 Rsvp!
-				p Having issues or just like doing things the old-fashioned way? Call <a href='tel:(204) 979-6392'>Garrett</a> or <a href='tel:(204) 998-0863'>Veronica</a>.
+				p Having issues or just like doing things the old-fashioned way? <a href='mailto:gillisorama@gmail.com'>E-mail us</a>.
 
 				form
 					fieldset.guest(ng-repeat='guest in model.guests track by $index')
@@ -54,4 +53,10 @@ block content
 						input(type='radio', name='arePartyAnimals', value='false', ng-model='model.arePartyAnimals') 
 						|&nbsp;Nah
 
-					button(ng-click='save()') Ka-pow!
+					button(ng-click='save()', ng-disabled='isSaving') Ka-pow!
+
+					.alert-box.success(ng-show='isSaved', ng-cloak)
+						|Thanks!
+
+					.alert-box.alert(ng-show='isError', ng-cloak)
+						|Error submitting RSVP. Please try again or call us.
