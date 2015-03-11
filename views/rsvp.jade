@@ -3,7 +3,7 @@ extends layout
 block content
 	section(ng-controller='RsvpController')
 		.row
-			.small-6.small-centered.columns
+			.small-12.medium-6.small-centered.columns
 				h3 Rsvp!
 				p Having issues or just like doing things the old-fashioned way? <a href='mailto:gillisorama@gmail.com'>E-mail us</a>.
 
@@ -12,16 +12,16 @@ block content
 						h4 Guest {{ $index + 1 }}
 
 						.row
-							.small-12.large-6.columns
+							.small-12.medium-6.columns
 								label(for='first-name-{{ $index }}') First Name
 								input(type='text', id='first-name-{{ $index }}', placeholder='First Name', ng-model='guest.firstName')
 
-							.small-12.large-6.columns
+							.small-12.medium-6.columns
 								label(for='last-name-{{ $index }}') Last Name
 								input(type='text', id='last-name-{{ $index }}', placeholder='Last Name', ng-model='guest.lastName')
 
 						.row
-							.small-12.large-6.columns
+							.small-12.medium-6.columns
 								input(type='radio', id='isAttending-{{ $index }}', name='isAttending-{{ $index }}', value='true', ng-model='guest.isAttending')
 								label(for='isAttending-{{ $index }}') Accepts
 								input(type='radio', id='isNotAttending-{{ $index }}', name='isNotAttending-{{ $index }}', value='false', ng-model='guest.isAttending')
