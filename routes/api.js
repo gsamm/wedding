@@ -22,8 +22,7 @@ var Invitation = sequelize.define('invitation', {
 
 var Guest = sequelize.define('guest', {
 	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-	firstName: { type: Sequelize.TEXT, field: 'first_name' },
-	lastName: { type: Sequelize.TEXT, field: 'last_name' },
+	name: { type: Sequelize.TEXT, field: 'name' },
 	isAttending: { type: Sequelize.BOOLEAN, field: 'is_attending' },
 	dietaryConsiderations: { type: Sequelize.TEXT }
 }, {
@@ -76,8 +75,7 @@ router.get('/invitations/:id', function (req, res) {
 				_.each(invitation.guests, function (element, index, list) {
 					result.guests.push({
 						id: element.id,
-						firstName: element.firstName,
-						lastName: element.lastName
+						name: element.name
 					});
 				});
 

@@ -5,20 +5,16 @@ block content
 		.row
 			.small-12.medium-6.small-centered.columns
 				h3 Rsvp!
-				p Having issues or just like doing things the old-fashioned way? <a href='mailto:gillisorama@gmail.com'>E-mail us</a>.
+				p Having issues or just like doing things the old-fashioned way? <a href='mailto:rsvp@garrettandveronica.com'>E-mail us</a>.
 
 				form
 					fieldset.guest(ng-repeat='guest in model.guests track by $index')
 						h4 Guest {{ $index + 1 }}
 
 						.row
-							.small-12.medium-6.columns
-								label(for='first-name-{{ $index }}') First Name
-								input(type='text', id='first-name-{{ $index }}', placeholder='First Name', ng-model='guest.firstName')
-
-							.small-12.medium-6.columns
-								label(for='last-name-{{ $index }}') Last Name
-								input(type='text', id='last-name-{{ $index }}', placeholder='Last Name', ng-model='guest.lastName')
+							.small-12.columns
+								label(for='name-{{ $index }}') Name
+								input(type='text', id='name-{{ $index }}', placeholder='Name', ng-model='guest.name')
 
 						.row
 							.small-12.medium-6.columns
