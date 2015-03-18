@@ -9,7 +9,7 @@ block content
 
 				form
 					input(type='text', id='email', placeholder='name@example.com', ng-model='email')
-					button(ng-click='find(email)') Find
+					button(ng-click='find(email)', ng-disabled='isFinding') Find
 
 				.alert-box.alert(ng-hide='isInvitationFound', ng-cloak)
 					|Could not find an invitation for that e-mail address.
