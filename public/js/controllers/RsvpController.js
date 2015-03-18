@@ -1,4 +1,4 @@
-angular.module('wedding').controller('RsvpController', ['$location', '$http', '$scope', '$window', function ($location, $http, $scope, $window) {
+angular.module('wedding').controller('RsvpController', ['$http', '$scope', '$window', function ($http, $scope, $window) {
 	loadInvitation();
 
 	$scope.isSaving = false;
@@ -7,7 +7,7 @@ angular.module('wedding').controller('RsvpController', ['$location', '$http', '$
 	$scope.save = save;
 
 	function loadInvitation() {
-		var path = $location.path();
+		var path = $window.location.pathname;
 		var invitationId = path.substr(path.lastIndexOf('/') + 1);
 
 		if (!_.isUndefined(invitationId) && !_.isEmpty(invitationId)) {
@@ -35,7 +35,7 @@ angular.module('wedding').controller('RsvpController', ['$location', '$http', '$
 	}
 
 	function save() {
-		var path = $location.path();
+		var path = $window.location.pathname;
 		var invitationId = path.substr(path.lastIndexOf('/') + 1);
 
 		$scope.isSaving = true;
