@@ -24,6 +24,12 @@ block content
 	section
 		.row
 			.small-12.medium-6.small-centered.columns
+				h3 When?
+				p <strong>4:30!</strong> Cocktails, dinner and dancing to follow!
+
+	section
+		.row
+			.small-12.medium-6.small-centered.columns
 				h3 Where?
 				p The ceremony and reception will be taking place at <a href="http://hawthornestates.ca">Hawthorn&nbsp;Estates</a>.
 				ul
@@ -51,7 +57,8 @@ block content
 				center: new google.maps.LatLng(50.019892, -96.705465),
 				zoom: 9,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				streetViewControl: false
+				streetViewControl: false,
+				scrollwheel: false
 			};
 
 			var hawthornMap = new google.maps.Map(document.getElementById('hawthorn'), hawthornOptions);
