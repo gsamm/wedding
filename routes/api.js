@@ -65,28 +65,16 @@ router.get('/invitations/:id', function (req, res) {
 			where: { guid: guid }
 		}).then(function (invitation) {
 			if (_.isNull(invitation)) {
-				res.send(404);
+				res.sendStatus(404);
 			} else {
-				var result = {
-					id: invitation.id,
-					guests: []
-				};
-
-				_.each(invitation.guests, function (element, index, list) {
-					result.guests.push({
-						id: element.id,
-						name: element.name
-					});
-				});
-
-				res.send(result);
+				res.send(invitation);
 			}
 		}).catch(function (err) {
 			console.error(err);
-			res.send(500);
+			res.sendStatus(500);
 		});
 	} else {
-		res.send(404);
+		res.sendStatus(404);
 	}
 });
 
@@ -99,7 +87,7 @@ router.put('/invitations/:id', function (req, res) {
 			where: { guid: guid }
 		}).then(function (invitation) {
 			if (_.isNull(invitation)) {
-				res.send(404);
+				res.sendStatus(404);
 			} else {
 				invitation.address1 = req.body.address1;
 				invitation.address2 = req.body.address2;
@@ -119,21 +107,21 @@ router.put('/invitations/:id', function (req, res) {
 						return Promise.all(_.each(invitation.guests, function (element, index, list) {
 							return element.save({ transaction: t});
 						}));
-					})
+					});
 				}).then(function () {
 					// Transaction has been committed.
-					res.send(200);
+					res.sendStatus(200);
 				}).catch(function (err) {
 					console.error(err);
-					res.send(500);
+					res.sendStatus(500);
 				});
 			}
 		}).catch(function (err) {
 			console.error(err);
-			res.send(500);
+			res.sendStatus(500);
 		});
 	} else {
-		res.send(404);
+		res.sendStatus(404);
 	}
 });
 

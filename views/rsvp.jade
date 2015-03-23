@@ -18,9 +18,9 @@ block content
 
 						.row
 							.small-12.medium-6.columns
-								input(type='radio', id='isAttending-{{ $index }}', name='isAttending-{{ $index }}', value='true', ng-model='guest.isAttending')
+								input(type='radio', id='isAttending-{{ $index }}', name='isAttending-{{ $index }}', ng-value='true', ng-model='guest.isAttending')
 								label(for='isAttending-{{ $index }}') Accepts
-								input(type='radio', id='isNotAttending-{{ $index }}', name='isNotAttending-{{ $index }}', value='false', ng-model='guest.isAttending')
+								input(type='radio', id='isNotAttending-{{ $index }}', name='isNotAttending-{{ $index }}', ng-value='false', ng-model='guest.isAttending')
 								label(for='isNotAttending-{{ $index }}') Regrets
 
 						.row

@@ -13,19 +13,19 @@ angular.module('wedding').controller('RsvpController', ['$http', '$scope', '$win
 		if (!_.isUndefined(invitationId) && !_.isEmpty(invitationId)) {
 			$http.get('/api/invitations/' + invitationId)
 				.success(function (data, status, headers, config) {
-					var model = {
-						id: data.id,
-						guests: []
-					};
+					// var model = {
+					// 	id: data.id,
+					// 	guests: []
+					// };
 
-					_.each(data.guests, function (element, index, list) {
-						model.guests.push({
-							id: element.id,
-							name: element.name
-						});
-					});
+					// _.each(data.guests, function (element, index, list) {
+					// 	model.guests.push({
+					// 		id: element.id,
+					// 		name: element.name
+					// 	});
+					// });
 
-					$scope.model = model;
+					$scope.model = data;
 				}).error(function (data, status, headers, config) {
 					$window.location.href = '/find-invitation';
 				});
