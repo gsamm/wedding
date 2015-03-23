@@ -97,6 +97,7 @@ router.put('/invitations/:id', function (req, res) {
 				invitation.arePartyAnimals = req.body.arePartyAnimals;
 
 				_.each(req.body.guests, function (element, index, list) {
+					invitation.guests[index].name = element.name;
 					invitation.guests[index].isAttending = element.isAttending;
 					invitation.guests[index].dietaryConsiderations = element.dietaryConsiderations;
 				});
