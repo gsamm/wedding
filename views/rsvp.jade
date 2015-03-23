@@ -43,10 +43,10 @@ block content
 
 					p We'd love you to stay and party with us all night! Would you be interested in bus service to and from the venue from a central Winnipeg location?
 					label
-						input(type='radio', name='arePartyAnimals', value='true', ng-model='model.arePartyAnimals') 
+						input(type='radio', name='arePartyAnimals', ng-value='true', ng-model='model.arePartyAnimals') 
 						|&nbsp;Heck yeah!
 					label
-						input(type='radio', name='arePartyAnimals', value='false', ng-model='model.arePartyAnimals') 
+						input(type='radio', name='arePartyAnimals', ng-value='false', ng-model='model.arePartyAnimals') 
 						|&nbsp;Nah
 
 					button(ng-click='save()', ng-disabled='isSaving') Ka-pow!
